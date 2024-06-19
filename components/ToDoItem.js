@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Button, TouchableOpacity, StyleSheet } from 'react-native';
 import { Fontisto } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { theme } from '../colors';
 
-const ToDoItem = ({ toDo, onToggleDone, onEdit, onDelete }) => {
+const ToDoItem = ({ toDo, onToggleDone, onEdit, onDelete, navigation }) => {
   return (
     <View style={styles.toDo}>
       <TouchableOpacity style={styles.checkBox} onPress={onToggleDone}>
@@ -17,7 +17,9 @@ const ToDoItem = ({ toDo, onToggleDone, onEdit, onDelete }) => {
         ...styles.toDoText,
         color: toDo.isDone ? theme.grey : "white",
         textDecorationLine: toDo.isDone ? "line-through" : "none"
-      }}>
+        }}
+        onPress={() => navigation.navigate('ToDoDetailScreen', { toDo })}
+      >
         {toDo.text}
       </Text>
       <TouchableOpacity style={styles.editBtn} onPress={onEdit}>

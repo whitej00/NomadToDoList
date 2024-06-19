@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { View, TextInput, ScrollView, StyleSheet } from 'react-native';
+import { View, TextInput, ScrollView, StyleSheet, Button, Alert } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import Header from '../components/Header';
-import ToDoItem from '../components/ToDoItem';
 import { useAsyncStorage } from '../hooks/useAsyncStorage';
 import { theme } from '../colors';
+import Header from '../components/Header';
+import ToDoItem from '../components/ToDoItem';
 
 const STORAGE_TOGGLE_STATUS_KEY = "@meta";
 const STORAGE_KEY = "@toDos";
 
-const HomeScreen = () => {
+const ToDoListScreen = ({ navigation }) => {
   const [working, setWorking] = useAsyncStorage(STORAGE_TOGGLE_STATUS_KEY, true);
   const [text, setText] = useState("");
   const [toDos, setToDos] = useAsyncStorage(STORAGE_KEY, {});
@@ -54,6 +54,10 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
+      <Button
+        title='Go to Profile'
+        onPress={() => navigation.navigate('ProfileScreen')}
+      />
       <StatusBar style="auto" />
       <Header working={working} setWorking={setWorking} />
       <TextInput
@@ -73,6 +77,7 @@ const HomeScreen = () => {
               onToggleDone={() => setDone(key)}
               onEdit={() => editToDo(key)}
               onDelete={() => deleteToDo(key)}
+              navigation={navigation}
             />
           ) : null
         )}
@@ -97,4 +102,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default ToDoListScreen;
